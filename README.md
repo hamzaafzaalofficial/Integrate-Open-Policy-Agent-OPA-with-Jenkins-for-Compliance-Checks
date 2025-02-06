@@ -39,4 +39,4 @@ curl -X PUT   --header "Content-Type: text/plain"   --data-binary @/opt/opa/poli
 
 ---
 ### Conclusion:
-This lab demonstrates how to integrate OPA with Jenkins for enforcing compliance checks in a CI/CD pipeline. You learned how to set up OPA, write Rego policies, integrate those policies into a Jenkins pipeline, and simulate compliance failures to verify OPA's responses. This setup ensures that only compliant applications are built and deployed, enhancing the security and governance of your CI/CD process. 
+This guide demonstrates how to integrate OPA with Jenkins for enforcing compliance checks in a CI/CD pipeline. You learned how to set up OPA, write Rego policies, integrate those policies into a Jenkins pipeline, and simulate compliance failures to verify OPA's responses. This setup ensures that only compliant applications are built and deployed, enhancing the security and governance of your CI/CD process. 
