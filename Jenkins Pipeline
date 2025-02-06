@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Your build steps here
+            }
+        }
+        stage('Compliance Check') {
+            steps {
+                script {
+                    def complianceResult = sh(script: '''
+                    curl -s -X POST http://68.183.88.95:8181/v1/data/jenkins/compliance/allow \
+                    -d @- <<EOF
+{
+    "input": {
+        "app": {
+            "debug": false,
+            "protocol": "https"
+        }
+    }
+}
+EOF
+                    ''', returnStdout: true).trim()
+                    def complianceStatus = readJSON text: complianceResult
+                    if (!complianceStatus.result) {
+                        error "Compliance check failed: ${complianceResult}"
+                    } else {
+                        echo "Compliance check passed."
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            when {
+                expression { return currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
+            steps {
+                echo 'Deploying...'
+                // Your deploy steps here
+            }
+        }
+    }
+}
